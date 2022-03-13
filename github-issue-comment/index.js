@@ -16,11 +16,7 @@ const github = require('@actions/github');
             issue_number: context.issue.number,
         })
         .then(result => result.data)
-        .then(data => data.filter(data => data.user.login == 'github-actions[bot]' 
-            && (data.body?.includes('Terraform Format and Style')
-                || data.body?.includes('Terraform Initialization')
-                || data.body?.includes('Terraform Validation')
-                || data.body?.includes('Terraform Plan'))))
+        .then(data => data.filter(data => data.user.login == 'github-actions[bot]' && includesCommentType(terraformStep, data.body)))
         .then(filteredData => filteredData.map(data => data.id))
         .then(ids => ids.forEach(id => octokit.rest.issues.deleteComment({
             owner: context.repo.owner,
@@ -114,4 +110,14 @@ ${planOutput}
 \`\`\`\n
 ${planError}
 \`\`\``;
+}
+
+function includesCommentType(terraformStep, body) {
+    switch(terraformStep) {
+        case 'format': return body.includes('Terraform Format and Style');
+        case 'init': return body.includes('Terraform Initialization');
+        case 'validate': return body.includes('Terraform Validation');
+        case 'plan': return body.includes('Terraform Plan');
+        default: throw new Error(`⛔ Unsupported terraform step: ${terraformStep}.`);
+    }
 }
