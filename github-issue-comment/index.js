@@ -15,7 +15,7 @@ const github = require('@actions/github');
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-            }).then(result => result.data.filter(data => data.user == 'github-actions[bot]'))
+            }).then(result => result.data.filter(data => data.user.login == 'github-actions[bot]'));
     
             console.log('Old comments: ', oldComments);
 
