@@ -8,7 +8,7 @@ const github = require('@actions/github');
         const octokit = github.getOctokit(token);
 
         const terraformStep = core.getInput("terraform-step");
-        const comment = terraformStepComment(terraformStep);
+        const comment = await terraformStepComment(terraformStep);
         
         if (comment) {
             await octokit.rest.issues.createComment({
