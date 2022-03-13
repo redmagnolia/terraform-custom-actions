@@ -21,4 +21,5 @@ runs:
       with:
         github-token: ${{ inputs.github-token }}
         init-outcome: ${{ steps.init.outcome }}
+        init-error: ${{ steps.init.outputs.stderr }}
         terraform-step: 'init'

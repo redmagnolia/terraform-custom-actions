@@ -68,7 +68,11 @@ function initComment() {
         return null;
     }
 
-    return `#### ⚙️ Terraform Initialization ❌`;
+    const initError = core.getInput('init-error');
+    return `#### ⚙️ Terraform Initialization ❌
+\`\`\`\n
+${initError}
+\`\`\``;
 }
 
 function validateComment() {

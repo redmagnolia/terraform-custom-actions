@@ -17,6 +17,9 @@ inputs:
   init-outcome:
     description: 'The status of terraform init'
     required: false
+  init-error:
+    description: 'The error of terraform init'
+    required: false
   validate-outcome:
     description: 'The status of terraform validate'
     required: false
