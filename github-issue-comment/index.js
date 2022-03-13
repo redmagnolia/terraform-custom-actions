@@ -17,7 +17,7 @@ const github = require('@actions/github');
                 issue_number: context.issue.number,
             }).then(result => result.data.filter(data => data.user == 'github-actions[bot]'))
     
-            console.log('Old comments: ', oldComments.data[0].user);
+            console.log('Old comments: ', oldComments);
 
             await octokit.rest.issues.createComment({
                 owner: context.repo.owner,
