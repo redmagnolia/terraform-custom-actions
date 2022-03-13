@@ -16,7 +16,7 @@ const github = require('@actions/github');
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
             }).then(result => result.data.filter(data => data.user.login == 'github-actions[bot]'))
-            .then(filtered => await octokit.rest.issues.deleteComment({
+            .then(filtered => octokit.rest.issues.deleteComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 comment_id: filtered.id,
