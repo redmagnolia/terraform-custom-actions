@@ -9,22 +9,35 @@ const github = require('@actions/github');
 
         const terraformStep = core.getInput("terraform-step");
 
-        switch(terraformStep) {
-            case 'format': formatStep(context, octokit);
-            default: throw new Error('⛔ Unsupported terraform step.');
-        }
+        octokit.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue_number,
+            body: createTerraformStepComment(terraformStep),
+          });
 
     } catch (error) {
         core.setFailed(error.message);
     }
 });
 
-function formatStep(context, octokit) {
-    const comments = octokit.rest.issues.listComments({
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        issue_number: context.issue_number,
-      });
-      
-      console.dir('Format comments: ', comments);
+function createTerraformStepComment(terraformStep) {
+    switch(terraformStep) {
+        case 'format': formatStep(context, octokit);
+        default: throw new Error('⛔ Unsupported terraform step.');
+    }
+}
+
+function formatStep() {
+    const formatOutcome = core.getInput('format-outcome');
+    
+    if (formatOutcome == 'success') {
+        return '🖌 Terraform Format and Style ✅'
+    }
+
+    const formatOutput = core.getInput('format-output');
+    return `🖌 Terraform Format and Style ❌
+\`\`\`\n
+${formatOutput}
+\`\`\``;
 }
