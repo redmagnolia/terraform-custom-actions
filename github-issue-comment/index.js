@@ -96,7 +96,12 @@ function planComment() {
     const planOutput = core.getInput('plan-output');
     const planError = core.getInput('plan-error');
 
-    console.log('Plan Outcome: ', planOutcome);
-    console.log('Plan Output: ', planOutput);
-    console.log('planError: ', planError);
+    if (planOutcome == 'success') {
+        return `📖 Terraform Plan ✅
+<details><summary>Show Plan</summary>
+\`\`\`\n
+${planOutput}
+\`\`\`
+</details>`;
+    }
 }
