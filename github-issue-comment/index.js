@@ -8,39 +8,36 @@ const github = require('@actions/github');
         const octokit = github.getOctokit(token);
 
         const terraformStep = core.getInput("terraform-step");
-        const formatOutcome = core.getInput('format-outcome');
-        const formatOutput = core.getInput('format-output');
 
-        let comment = null;
-
-        switch(terraformStep) {
-            case 'format': comment = formatComment(formatOutcome, formatOutput);
-        }
-
-        console.log('Comment: ', comment);
-        console.log('Octokit: ', octokit);
-
-        if (comment) {
-            await octokit.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue_number,
-                body: comment,
-              });
-        }
+        await octokit.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            body: createTerraformStepComment(terraformStep),
+          });
 
     } catch (error) {
-        core.setFailed(error);
+        core.setFailed(error.message);
     }
 })();
 
-function formatComment(outcome, output) {
-    if (outcome == 'success') {
+function createTerraformStepComment(terraformStep) {
+    switch(terraformStep) {
+        case 'format': return formatComment();
+        default: throw new Error(`⛔ Unsupported terraform step: ${terraformStep}.`);
+    }
+}
+
+function formatComment() {
+    const formatOutcome = core.getInput('format-outcome');
+    
+    if (formatOutcome == 'success') {
         return '🖌 Terraform Format and Style ✅'
     }
 
+    const formatOutput = core.getInput('format-output');
     return `🖌 Terraform Format and Style ❌
 \`\`\`\n
-${output}
+${formatOutput}
 \`\`\``;
 }
