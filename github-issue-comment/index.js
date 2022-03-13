@@ -8,13 +8,16 @@ const github = require('@actions/github');
         const octokit = github.getOctokit(token);
 
         const terraformStep = core.getInput("terraform-step");
-
-        await octokit.rest.issues.createComment({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.issue.number,
-            body: createTerraformStepComment(terraformStep),
-          });
+        const comment = createTerraformStepComment(terraformStep);
+        
+        if (comment) {
+            await octokit.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: createTerraformStepComment(terraformStep),
+              });
+        }
 
     } catch (error) {
         core.setFailed(error.message);
@@ -32,7 +35,7 @@ function formatComment() {
     const formatOutcome = core.getInput('format-outcome');
     
     if (formatOutcome == 'success') {
-        return '🖌 Terraform Format and Style ✅'
+        return null;
     }
 
     const formatOutput = core.getInput('format-output');
