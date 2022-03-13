@@ -11,7 +11,7 @@ const github = require('@actions/github');
         const comment = terraformStepComment(terraformStep);
         
         if (comment) {
-            const oldComments = await octokit.rest.issues.listComments({
+            await octokit.rest.issues.listComments({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
@@ -24,8 +24,6 @@ const github = require('@actions/github');
                 repo: context.repo.repo,
                 comment_id: id,
             })));
-
-            console.log('Old Comments: ', oldComments);
 
             await octokit.rest.issues.createComment({
                 owner: context.repo.owner,
