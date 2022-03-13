@@ -17,6 +17,8 @@ const github = require('@actions/github');
             case 'format': comment = formatComment(formatOutcome, formatOutput);
         }
 
+        console.log('Comment: ', comment);
+
         if (comment) {
             await octokit.rest.issues.createComment({
                 owner: context.repo.owner,
