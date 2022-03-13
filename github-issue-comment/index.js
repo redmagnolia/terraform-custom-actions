@@ -8,36 +8,36 @@ const github = require('@actions/github');
         const octokit = github.getOctokit(token);
 
         const terraformStep = core.getInput("terraform-step");
+        const formatOutcome = core.getInput('format-outcome');
+        const formatOutput = core.getInput('format-output');
 
-        await octokit.rest.issues.createComment({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.issue_number,
-            body: createTerraformStepComment(terraformStep, core),
-          });
+        let comment = null;
+
+        switch(terraformStep) {
+            case 'format': comment = formatComment(formatOutcome, formatOutput);
+        }
+
+        if (comment) {
+            await octokit.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue_number,
+                body: comment,
+              });
+        }
 
     } catch (error) {
         core.setFailed(error);
     }
 })();
 
-function createTerraformStepComment(terraformStep, core) {
-    switch(terraformStep) {
-        case 'format': return formatComment(core);
-        default: throw new Error(`⛔ Unsupported terraform step: ${terraformStep}.`);
-    }
-}
-
-function formatComment(core) {
-    const formatOutcome = core.getInput('format-outcome');
-    
-    if (formatOutcome == 'success') {
+function formatComment(outcome, output) {
+    if (outcome == 'success') {
         return '🖌 Terraform Format and Style ✅'
     }
 
-    const formatOutput = core.getInput('format-output');
     return `🖌 Terraform Format and Style ❌
 \`\`\`\n
-${formatOutput}
+${output}
 \`\`\``;
 }
