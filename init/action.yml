@@ -20,5 +20,5 @@ runs:
       uses: redmagnolia/terraform-custom-actions/github-issue-comment@main
       with:
         github-token: ${{ inputs.github-token }}
-        init-outcome: ${{ steps.fmt.outcome }}
+        init-outcome: ${{ steps.init.outcome }}
         terraform-step: 'init'
