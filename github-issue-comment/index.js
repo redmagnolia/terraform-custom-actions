@@ -19,7 +19,7 @@ const github = require('@actions/github');
     } catch (error) {
         core.setFailed(error.message);
     }
-});
+})();
 
 function createTerraformStepComment(terraformStep) {
     switch(terraformStep) {
