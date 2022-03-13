@@ -12,7 +12,7 @@ runs:
   steps:
     - name: Terraform Init
       id: init
-      run: terraform init
+      run: terraform init -no-color
       shell: bash
 
     - name: Post Terraform Init
