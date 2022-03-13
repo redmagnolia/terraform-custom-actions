@@ -56,11 +56,11 @@ function formatComment() {
     const formatOutcome = core.getInput('format-outcome');
     
     if (formatOutcome == null || formatOutcome == 'success') {
-        return null;
+        return `#### 🖌 Terraform Format and Style ✅`;
     }
 
     const formatOutput = core.getInput('format-output');
-    return `🖌 Terraform Format and Style ❌
+    return `#### 🖌 Terraform Format and Style ❌
 \`\`\`\n
 ${formatOutput}
 \`\`\``;
@@ -70,22 +70,22 @@ function initComment() {
     const initOutcome = core.getInput('init-outcome');
 
     if (initOutcome == null || initOutcome == 'success') {
-        return null;
+        return `#### ⚙️ Terraform Initialization ✅`;
     }
 
-    return '⚙️ Terraform Initialization ❌';
+    return `#### ⚙️ Terraform Initialization ❌`;
 }
 
 function validateComment() {
     const validateOutcome = core.getInput('validate-outcome');
 
     if (validateOutcome == null || validateOutcome == 'success') {
-        return null;
+        return `#### 🤖 Terraform Validation ✅`;
     }
 
     const validateError = core.getInput('validate-error');
 
-    return `🤖 Terraform Validation ❌
+    return `#### 🤖 Terraform Validation ❌
 \`\`\`\n
 ${validateError}
 \`\`\``;
@@ -97,7 +97,7 @@ function planComment() {
     const planError = core.getInput('plan-error');
 
     if (planOutcome == 'success') {
-        return `📖 Terraform Plan ✅
+        return `#### 📖 Terraform Plan ✅
 
 <details><summary>Show Plan</summary>
 
@@ -107,4 +107,9 @@ ${planOutput}
 
 </details>`;
     }
+
+    return `#### 📖 Terraform Plan ❌
+\`\`\`\n
+${planError}
+\`\`\``;
 }
