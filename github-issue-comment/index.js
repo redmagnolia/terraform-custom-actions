@@ -33,7 +33,7 @@ const github = require('@actions/github');
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: terraformStepComment(terraformStep, context, octokit),
+                body: terraformStepComment(terraformStep),
               });
         }
 
