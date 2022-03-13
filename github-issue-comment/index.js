@@ -17,7 +17,7 @@ const github = require('@actions/github');
                 issue_number: context.issue.number,
             })
             .then(result => result.data)
-            .then(data => data.filter(data => data.user.login == 'github-actions[bot]'));
+            .then(data => data.filter(data => data.body?.includes('Terraform Format and Style')));
 
             console.log('Old Comments: ', oldComments);
 
