@@ -14,6 +14,18 @@ inputs:
   format-output:
     description: 'The output of terraform format'
     required: false
+  init-outcome:
+    description: 'The status of terraform init'
+    required: false
+  validate-outcome:
+    description: 'The status of terraform validate'
+    required: false
+  validate-output:
+    description: 'The output of terraform validate'
+    required: false
+  validate-error:
+    description: 'The error of terraform validate'
+    required: false
 
 runs:
   using: 'node16'

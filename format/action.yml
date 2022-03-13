@@ -1,5 +1,5 @@
 name: 'Terraform Format with Pull Request update'
-description: 'Runs terraform format for a configuration and creates/updates a comment on the GitHub issue'
+description: 'Runs terraform format for a configuration and creates a comment on the GitHub issue'
 
 inputs:
   github-token:

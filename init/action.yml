@@ -1,0 +1,24 @@
+name: 'Terraform Init with Pull Request update'
+description: 'Runs terraform init for a configuration and creates a comment on the GitHub issue'
+
+inputs:
+  github-token:
+    description: 'The GitHub token for authentication'
+    required: true
+
+runs:
+  using: 'composite'
+
+  steps:
+    - name: Terraform Init
+      id: init
+      run: terraform init
+      shell: bash
+
+    - name: Post Terraform Init
+      if: always()
+      uses: redmagnolia/terraform-custom-actions/github-issue-comment@main
+      with:
+        github-token: ${{ inputs.github-token }}
+        init-outcome: ${{ steps.fmt.outcome }}
+        terraform-step: 'init'

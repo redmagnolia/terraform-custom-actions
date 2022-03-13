@@ -23,7 +23,7 @@ const github = require('@actions/github');
             repo: context.repo.repo,
             comment_id: id,
         })));
-        
+
         if (comment) {
             await octokit.rest.issues.createComment({
                 owner: context.repo.owner,
@@ -41,6 +41,8 @@ const github = require('@actions/github');
 function terraformStepComment(terraformStep) {
     switch(terraformStep) {
         case 'format': return formatComment();
+        case 'init': return initComment();
+        case 'validate': return validateComment();
         default: throw new Error(`⛔ Unsupported terraform step: ${terraformStep}.`);
     }
 }
@@ -56,5 +58,35 @@ function formatComment() {
     return `🖌 Terraform Format and Style ❌
 \`\`\`\n
 ${formatOutput}
+\`\`\``;
+}
+
+function initComment() {
+    const initOutcome = core.getInput('init-outcome');
+
+    if (initOutcome == 'success') {
+        return null;
+    }
+
+    return '⚙️ Terraform Initialization ❌';
+}
+
+function validateComment() {
+    const validateOutcome = core.getInput('validate-outcome');
+
+    if (validateOutcome == 'sucess') {
+        return null;
+    }
+
+    const validateOutput = core.getInput('validate-output');
+    const validateError = core.getInput('validate-error');
+
+    return `🤖 Terraform Validation ❌
+\`\`\`\n
+${validateOutput}
+\`\`\`
+
+\`\`\`\n
+${validateError}
 \`\`\``;
 }
