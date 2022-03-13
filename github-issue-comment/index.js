@@ -17,7 +17,7 @@ const github = require('@actions/github');
                 issue_number: context.issue.number,
             });
     
-            console.log('Old comments: ', oldComments);
+            console.log('Old comments: ', oldComments.data[0].user);
 
             await octokit.rest.issues.createComment({
                 owner: context.repo.owner,
