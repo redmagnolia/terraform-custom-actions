@@ -13,7 +13,7 @@ const github = require('@actions/github');
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: context.issue_number,
-            body: createTerraformStepComment(terraformStep),
+            body: createTerraformStepComment(terraformStep, core),
           });
 
     } catch (error) {
@@ -21,14 +21,14 @@ const github = require('@actions/github');
     }
 })();
 
-function createTerraformStepComment(terraformStep) {
+function createTerraformStepComment(terraformStep, core) {
     switch(terraformStep) {
-        case 'format': return formatComment();
+        case 'format': return formatComment(core);
         default: throw new Error(`⛔ Unsupported terraform step: ${terraformStep}.`);
     }
 }
 
-function formatComment() {
+function formatComment(core) {
     const formatOutcome = core.getInput('format-outcome');
     
     if (formatOutcome == 'success') {
