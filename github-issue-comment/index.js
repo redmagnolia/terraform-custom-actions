@@ -23,7 +23,7 @@ const github = require('@actions/github');
 
 function createTerraformStepComment(terraformStep) {
     switch(terraformStep) {
-        case 'format': formatStep(context, octokit);
+        case 'format': formatStep();
         default: throw new Error('⛔ Unsupported terraform step.');
     }
 }
