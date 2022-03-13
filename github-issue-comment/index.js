@@ -19,7 +19,7 @@ const github = require('@actions/github');
             .then(filtered => octokit.rest.issues.deleteComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                comment_id: filtered.id,
+                comment_id: filtered.data.id,
             }));
 
             await octokit.rest.issues.createComment({
