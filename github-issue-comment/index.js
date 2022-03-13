@@ -11,16 +11,15 @@ const github = require('@actions/github');
         const comment = terraformStepComment(terraformStep);
         
         if (comment) {
-            await octokit.rest.issues.listComments({
+            const oldComments = await octokit.rest.issues.listComments({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-            }).then(result => result.data.filter(data => data.user.login == 'github-actions[bot]'))
-            .then(filtered => octokit.rest.issues.deleteComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: filtered.data.id,
-            }));
+            })
+            .then(result => result.data)
+            .then(data => data.filter(data => data.user.login == 'github-actions[bot]'));
+
+            console.log('Old Comments: ', oldComments);
 
             await octokit.rest.issues.createComment({
                 owner: context.repo.owner,
