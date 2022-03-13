@@ -24,14 +24,14 @@ const github = require('@actions/github');
     }
 })();
 
-function terraformStepComment(terraformStep, context, octokit) {
+async function terraformStepComment(terraformStep, context, octokit) {
     switch(terraformStep) {
-        case 'format': return formatComment(context, octokit);
+        case 'format': return await formatComment(context, octokit);
         default: throw new Error(`⛔ Unsupported terraform step: ${terraformStep}.`);
     }
 }
 
-function formatComment(context, octokit) {
+async function formatComment(context, octokit) {
     const formatOutcome = core.getInput('format-outcome');
     
     if (formatOutcome == 'success') {
@@ -42,7 +42,7 @@ function formatComment(context, octokit) {
         });
 
         console.log('Old comments: ', oldComments);
-        
+
         return null;
     }
 
