@@ -1,0 +1,20 @@
+name: 'GitHub Issue Comment'
+description: 'Creates or updates a comment on a GitHub issue for terraform format/init/validate/plan'
+
+inputs:
+  github-token:
+    description: 'The GitHub Token for authentication on behalf of the workflow'
+    required: true
+  terraform-step:
+    description: 'The terraform step in the workflow'
+    required: true
+  format-outcome:
+    description: 'The status of terraform format'
+    required: false
+  format-output:
+    description: 'The output of terraform format'
+    required: false
+
+runs:
+  using: 'node16'
+  main: index.js
