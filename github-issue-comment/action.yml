@@ -23,8 +23,8 @@ inputs:
   validate-error:
     description: 'The error of terraform validate'
     required: false
-  plan-outcome:
-    description: 'The status of terraform plan'
+  valid-plan:
+    description: 'The status of the terraform plan'
     required: false
   plan-output:
     description: 'The output of terraform plan'

@@ -16,7 +16,7 @@ const github = require('@actions/github');
             issue_number: context.issue.number,
         })
         .then(result => result.data)
-        .then(data => data.filter(data => data.user.login == 'github-actions[bot]' && includesCommentType(terraformStep, data.body)))
+        .then(data => data.filter(data => data.user.login == 'github-actions[bot]' && includesCommentTypes(data.body)))
         .then(filteredData => filteredData.map(data => data.id))
         .then(ids => ids.forEach(id => octokit.rest.issues.deleteComment({
             owner: context.repo.owner,
@@ -32,6 +32,7 @@ const github = require('@actions/github');
                 body: terraformStepComment(terraformStep),
               });
         }
+
     } catch (error) {
         core.setFailed(error.message);
     }
@@ -51,7 +52,7 @@ function formatComment() {
     const formatOutcome = core.getInput('format-outcome');
     
     if (formatOutcome == null || formatOutcome == 'success') {
-        return `#### 🖌 Terraform Format and Style ✅`;
+        return null;
     }
 
     const formatOutput = core.getInput('format-output');
@@ -65,7 +66,7 @@ function initComment() {
     const initOutcome = core.getInput('init-outcome');
 
     if (initOutcome == null || initOutcome == 'success') {
-        return `#### ⚙️ Terraform Initialization ✅`;
+        return null;
     }
 
     return `#### ⚙️ Terraform Initialization ❌`;
@@ -75,7 +76,7 @@ function validateComment() {
     const validateOutcome = core.getInput('validate-outcome');
 
     if (validateOutcome == null || validateOutcome == 'success') {
-        return `#### 🤖 Terraform Validation ✅`;
+        return null;
     }
 
     const validateError = core.getInput('validate-error');
@@ -87,12 +88,15 @@ ${validateError}
 }
 
 function planComment() {
-    const planOutcome = core.getInput('plan-outcome');
+    const validPlan = core.getInput('valid-plan');
     const planOutput = core.getInput('plan-output');
     const planError = core.getInput('plan-error');
 
-    if (planOutcome == 'success') {
-        return `#### 📖 Terraform Plan ✅
+    if (validPlan) {
+        return `#### 🖌 Terraform Format and Style ✅
+#### ⚙️ Terraform Initialization ✅
+#### 🤖 Terraform Validation ✅
+#### 📖 Terraform Plan ✅
 
 <details><summary>Show Plan</summary>
 
@@ -109,12 +113,9 @@ ${planError}
 \`\`\``;
 }
 
-function includesCommentType(terraformStep, body) {
-    switch(terraformStep) {
-        case 'format': return body.includes('Terraform Format and Style');
-        case 'init': return body.includes('Terraform Initialization');
-        case 'validate': return body.includes('Terraform Validation');
-        case 'plan': return body.includes('Terraform Plan');
-        default: throw new Error(`⛔ Unsupported terraform step: ${terraformStep}.`);
-    }
+function includesCommentTypes(body) {
+    return body.includes('Terraform Format and Style')
+        || body.includes('Terraform Initialization')
+        || body.includes('Terraform Validation')
+        || body.includes('Terraform Plan');
 }

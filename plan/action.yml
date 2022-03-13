@@ -5,6 +5,9 @@ inputs:
   github-token:
     description: 'The GitHub token for authentication'
     required: true
+  valid-plan:
+    description: 'Overall status of the terraform configuration - fmt/init/validate/plan'
+    required: true
 
 runs:
   using: 'composite'
@@ -20,7 +23,7 @@ runs:
       uses: redmagnolia/terraform-custom-actions/github-issue-comment@main
       with:
         github-token: ${{ inputs.github-token }}
-        plan-outcome: ${{ steps.plan.outcome }}
+        valid-plan: ${{ inputs.valid-plan }}
         plan-output: ${{ steps.plan.outputs.stdout }}
         plan-error: ${{ steps.plan.outputs.stderr }}
         terraform-step: 'plan'
