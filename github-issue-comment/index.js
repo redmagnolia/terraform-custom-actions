@@ -17,7 +17,8 @@ const github = require('@actions/github');
                 issue_number: context.issue.number,
             })
             .then(result => result.data)
-            .then(data => data.filter(data => data.body?.includes('Terraform Format and Style')));
+            .then(data => data.filter(data => data.body?.includes('Terraform Format and Style')))
+            .then(filteredData => filteredData.map(data => data.id));
 
             console.log('Old Comments: ', oldComments);
 
