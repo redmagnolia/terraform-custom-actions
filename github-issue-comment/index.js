@@ -23,12 +23,12 @@ const github = require('@actions/github');
 
 function createTerraformStepComment(terraformStep) {
     switch(terraformStep) {
-        case 'format': formatStep();
-        default: throw new Error(`⛔ Unsupported terraform step ${terraformStep}.`);
+        case 'format': return formatComment();
+        default: throw new Error(`⛔ Unsupported terraform step: ${terraformStep}.`);
     }
 }
 
-function formatStep() {
+function formatComment() {
     const formatOutcome = core.getInput('format-outcome');
     
     if (formatOutcome == 'success') {
