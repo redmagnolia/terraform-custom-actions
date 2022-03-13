@@ -95,7 +95,8 @@ function planComment() {
     const planOutcome = core.getInput('plan-outcome');
     const planOutput = core.getInput('plan-output');
     const planError = core.getInput('plan-error');
-    const formatOutcome = core.getInput('format-outcome');
-    const initOutcome = core.getInput('init-outcome');
-    const validateOutcome = core.getInput('validate-outcome');
+
+    console.log('Plan Outcome: ', planOutcome);
+    console.log('Plan Output: ', planOutput);
+    console.log('planError: ', planError);
 }
