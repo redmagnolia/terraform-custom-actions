@@ -82,14 +82,9 @@ function validateComment() {
         return null;
     }
 
-    const validateOutput = core.getInput('validate-output');
     const validateError = core.getInput('validate-error');
 
     return `🤖 Terraform Validation ❌
-\`\`\`\n
-${validateOutput}
-\`\`\`
-
 \`\`\`\n
 ${validateError}
 \`\`\``;
