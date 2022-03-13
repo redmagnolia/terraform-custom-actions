@@ -8,14 +8,14 @@ const github = require('@actions/github');
         const octokit = github.getOctokit(token);
 
         const terraformStep = core.getInput("terraform-step");
-        const comment = createTerraformStepComment(terraformStep);
+        const comment = terraformStepComment(terraformStep);
         
         if (comment) {
             await octokit.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: createTerraformStepComment(terraformStep),
+                body: terraformStepComment(terraformStep, context, octokit),
               });
         }
 
@@ -24,17 +24,25 @@ const github = require('@actions/github');
     }
 })();
 
-function createTerraformStepComment(terraformStep) {
+function terraformStepComment(terraformStep, context, octokit) {
     switch(terraformStep) {
-        case 'format': return formatComment();
+        case 'format': return formatComment(context, octokit);
         default: throw new Error(`⛔ Unsupported terraform step: ${terraformStep}.`);
     }
 }
 
-function formatComment() {
+function formatComment(context, octokit) {
     const formatOutcome = core.getInput('format-outcome');
     
     if (formatOutcome == 'success') {
+        const oldComments = await octokit.rest.issues.listComments({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+        });
+
+        console.log('Old comments: ', oldComments);
+        
         return null;
     }
 
