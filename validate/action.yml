@@ -12,7 +12,7 @@ runs:
   steps:
     - name: Terraform Validate
       id: validate
-      run: terraform vaildate
+      run: terraform validate
       shell: bash
 
     - name: Post Terraform Validate

@@ -16,7 +16,11 @@ const github = require('@actions/github');
             issue_number: context.issue.number,
         })
         .then(result => result.data)
-        .then(data => data.filter(data => data.user.login == 'github-actions[bot]' && data.body?.includes('Terraform Format and Style')))
+        .then(data => data.filter(data => data.user.login == 'github-actions[bot]' 
+            && (data.body?.includes('Terraform Format and Style')
+                || data.body?.includes('Terraform Initialization')
+                || data.body?.includes('Terraform Validation')
+                || data.body?.includes('Terraform Plan'))))
         .then(filteredData => filteredData.map(data => data.id))
         .then(ids => ids.forEach(id => octokit.rest.issues.deleteComment({
             owner: context.repo.owner,
