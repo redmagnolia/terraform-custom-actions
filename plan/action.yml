@@ -1,0 +1,43 @@
+name: 'Terraform Plan with Pull Request update'
+description: 'Runs terraform plan for a configuration and creates a comment on the GitHub issue'
+
+inputs:
+  github-token:
+    description: 'The GitHub token for authentication'
+    required: true
+  format-outcome:
+    description: 'The status of terraform format'
+    required: false
+  init-outcome:
+    description: 'The status of terraform init'
+    required: false
+  validate-outcome:
+    description: 'The status of terraform validate'
+    required: false
+
+runs:
+  using: 'composite'
+
+  steps:
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -detailed-exitcode -no-color || true
+      shell: bash
+
+    - name: Post Terraform Plan
+      if: always()
+      uses: redmagnolia/terraform-custom-actions/github-issue-comment@main
+      with:
+        github-token: ${{ inputs.github-token }}
+        plan-outcome: ${{ steps.plan.outcome }}
+        plan-output: ${{ steps.plan.outputs.stdout }}
+        plan-error: ${{ steps.plan.outputs.stderr }}
+        format-outcome: ${{ inputs.format-outcome }}
+        init-outcome: ${{ inputs.init-outcome }}
+        validate-outcome: ${{ inputs.validate-outcome }}
+        terraform-step: 'plan'
+
+    - name: Terraform Plan Error
+      if: ${{ steps.plan.outputs.exitcode == '1' }}
+      run: exit 1
+      shell: bash

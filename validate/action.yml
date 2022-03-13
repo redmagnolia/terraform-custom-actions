@@ -21,6 +21,5 @@ runs:
       with:
         github-token: ${{ inputs.github-token }}
         validate-outcome: ${{ steps.validate.outcome }}
-        validate-output: ${{ steps.validate.outputs.stdout }}
         validate-error: ${{ steps.validate.outputs.stderr }}
         terraform-step: 'validate'

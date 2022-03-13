@@ -47,6 +47,7 @@ function terraformStepComment(terraformStep) {
         case 'format': return formatComment();
         case 'init': return initComment();
         case 'validate': return validateComment();
+        case 'plan': return planComment();
         default: throw new Error(`⛔ Unsupported terraform step: ${terraformStep}.`);
     }
 }
@@ -54,7 +55,7 @@ function terraformStepComment(terraformStep) {
 function formatComment() {
     const formatOutcome = core.getInput('format-outcome');
     
-    if (formatOutcome == 'success') {
+    if (formatOutcome == null || formatOutcome == 'success') {
         return null;
     }
 
@@ -68,7 +69,7 @@ ${formatOutput}
 function initComment() {
     const initOutcome = core.getInput('init-outcome');
 
-    if (initOutcome == 'success') {
+    if (initOutcome == null || initOutcome == 'success') {
         return null;
     }
 
@@ -78,7 +79,7 @@ function initComment() {
 function validateComment() {
     const validateOutcome = core.getInput('validate-outcome');
 
-    if (validateOutcome == 'success') {
+    if (validateOutcome == null || validateOutcome == 'success') {
         return null;
     }
 
@@ -88,4 +89,13 @@ function validateComment() {
 \`\`\`\n
 ${validateError}
 \`\`\``;
+}
+
+function planComment() {
+    const planOutcome = core.getInput('plan-outcome');
+    const planOutput = core.getInput('plan-output');
+    const planError = core.getInput('plan-error');
+    const formatOutcome = core.getInput('format-outcome');
+    const initOutcome = core.getInput('init-outcome');
+    const validateOutcome = core.getInput('validate-outcome');
 }
