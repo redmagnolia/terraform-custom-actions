@@ -9,7 +9,7 @@ const github = require('@actions/github');
 
         const terraformStep = core.getInput("terraform-step");
 
-        octokit.rest.issues.createComment({
+        await octokit.rest.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: context.issue_number,
