@@ -18,6 +18,7 @@ const github = require('@actions/github');
         }
 
         console.log('Comment: ', comment);
+        console.log('Octokit: ', octokit);
 
         if (comment) {
             await octokit.rest.issues.createComment({
