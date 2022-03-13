@@ -78,7 +78,7 @@ function initComment() {
 function validateComment() {
     const validateOutcome = core.getInput('validate-outcome');
 
-    if (validateOutcome == 'sucess') {
+    if (validateOutcome == 'success') {
         return null;
     }
 
