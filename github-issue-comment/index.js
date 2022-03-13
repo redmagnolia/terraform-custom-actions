@@ -98,10 +98,13 @@ function planComment() {
 
     if (planOutcome == 'success') {
         return `📖 Terraform Plan ✅
+
 <details><summary>Show Plan</summary>
+
 \`\`\`\n
 ${planOutput}
 \`\`\`
+
 </details>`;
     }
 }
