@@ -32,7 +32,6 @@ const github = require('@actions/github');
                 body: terraformStepComment(terraformStep),
               });
         }
-
     } catch (error) {
         core.setFailed(error.message);
     }
