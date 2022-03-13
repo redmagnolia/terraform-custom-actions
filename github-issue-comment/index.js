@@ -28,6 +28,8 @@ const github = require('@actions/github');
             comment_id: id,
         })));
 
+        console.log('Comment: ', comment);
+
         if (comment) {
             await octokit.rest.issues.createComment({
                 owner: context.repo.owner,
