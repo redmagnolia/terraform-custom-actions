@@ -98,10 +98,10 @@ function planComment() {
     if (validPlan) {
         return `| Steps | Status |
 |------------------------------------|---|
-| #### 🖌 Terraform Format and Style | ✅ |
-| #### ⚙️ Terraform Initialization | ✅ |
-| #### 🤖 Terraform Validation | ✅ |
-| #### 📖 Terraform Plan | ✅ |
+| 🖌 Terraform Format and Style | ✅ |
+| ⚙️ Terraform Initialization | ✅ |
+| 🤖 Terraform Validation | ✅ |
+| 📖 Terraform Plan | ✅ |
 
 <details><summary>Show Plan</summary>
 
