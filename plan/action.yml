@@ -5,14 +5,34 @@ inputs:
   github-token:
     description: 'The GitHub token for authentication'
     required: true
-  valid-plan:
-    description: 'Overall status of the terraform configuration - fmt/init/validate/plan'
-    required: true
 
 runs:
   using: 'composite'
 
   steps:
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.x.x
+    
+    - name: Terraform Format
+      id: fmt
+      uses: redmagnolia/terraform-custom-actions/format@main
+      with:
+        github-token: ${{ inputs.github-token }}
+
+    - name: Terraform Init
+      id: init
+      uses: redmagnolia/terraform-custom-actions/init@main
+      with:
+        github-token: ${{ inputs.github-token }}
+
+    - name: Terraform Validate
+      id: validate
+      uses: redmagnolia/terraform-custom-actions/validate@main
+      with:
+        github-token: ${{ inputs.github-token }}
+
     - name: Terraform Plan
       id: plan
       run: terraform plan -detailed-exitcode -no-color || true
@@ -23,7 +43,7 @@ runs:
       uses: redmagnolia/terraform-custom-actions/github-issue-comment@main
       with:
         github-token: ${{ inputs.github-token }}
-        valid-plan: ${{ inputs.valid-plan }}
+        valid-plan: ${{ steps.fmt.outcome == 'success' && steps.init.outcome == 'success' && steps.validate.outcome == 'success' && steps.plan.outcome == 'success' }}
         plan-output: ${{ steps.plan.outputs.stdout }}
         plan-error: ${{ steps.plan.outputs.stderr }}
         terraform-step: 'plan'
