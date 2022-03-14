@@ -39,7 +39,6 @@ runs:
       shell: bash
 
     - name: Post Terraform Plan
-      if: always()
       uses: redmagnolia/terraform-custom-actions/github-issue-comment@v1
       with:
         github-token: ${{ inputs.github-token }}
