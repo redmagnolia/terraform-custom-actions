@@ -96,10 +96,12 @@ function planComment() {
     const planError = core.getInput('plan-error');
 
     if (validPlan) {
-        return `#### 🖌 Terraform Format and Style ✅
-#### ⚙️ Terraform Initialization ✅
-#### 🤖 Terraform Validation ✅
-#### 📖 Terraform Plan ✅
+        return `| Steps | Status |
+|------------------------------------|---|
+| #### 🖌 Terraform Format and Style | ✅ |
+| #### ⚙️ Terraform Initialization | ✅ |
+| #### 🤖 Terraform Validation | ✅ |
+| #### 📖 Terraform Plan | ✅ |
 
 <details><summary>Show Plan</summary>
 

@@ -17,7 +17,7 @@ runs:
 
     - name: Post Terraform Format
       if: always()
-      uses: redmagnolia/terraform-custom-actions/github-issue-comment@v1
+      uses: redmagnolia/terraform-custom-actions/commentator@v1
       with:
         github-token: ${{ inputs.github-token }}
         format-outcome: ${{ steps.fmt.outcome }}
