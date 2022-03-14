@@ -17,19 +17,19 @@ runs:
     
     - name: Terraform Format
       id: fmt
-      uses: redmagnolia/terraform-custom-actions/format@main
+      uses: redmagnolia/terraform-custom-actions/format@v1
       with:
         github-token: ${{ inputs.github-token }}
 
     - name: Terraform Init
       id: init
-      uses: redmagnolia/terraform-custom-actions/init@main
+      uses: redmagnolia/terraform-custom-actions/init@v1
       with:
         github-token: ${{ inputs.github-token }}
 
     - name: Terraform Validate
       id: validate
-      uses: redmagnolia/terraform-custom-actions/validate@main
+      uses: redmagnolia/terraform-custom-actions/validate@v1
       with:
         github-token: ${{ inputs.github-token }}
 
@@ -40,7 +40,7 @@ runs:
 
     - name: Post Terraform Plan
       if: always()
-      uses: redmagnolia/terraform-custom-actions/github-issue-comment@main
+      uses: redmagnolia/terraform-custom-actions/github-issue-comment@v1
       with:
         github-token: ${{ inputs.github-token }}
         valid-plan: ${{ steps.fmt.outcome == 'success' && steps.init.outcome == 'success' && steps.validate.outcome == 'success' && steps.plan.outcome == 'success' }}

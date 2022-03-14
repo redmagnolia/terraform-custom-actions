@@ -17,7 +17,7 @@ runs:
 
     - name: Post Terraform Init
       if: always()
-      uses: redmagnolia/terraform-custom-actions/github-issue-comment@main
+      uses: redmagnolia/terraform-custom-actions/github-issue-comment@v1
       with:
         github-token: ${{ inputs.github-token }}
         init-outcome: ${{ steps.init.outcome }}
