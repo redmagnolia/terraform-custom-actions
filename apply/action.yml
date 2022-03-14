@@ -1,0 +1,18 @@
+name: 'Terraform Apply'
+description: 'Runs terraform apply for a configuration'
+
+runs:
+  using: 'composite'
+
+  steps:
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.x.x
+
+    - name: Terraform Apply
+      run: |
+        terraform fmt -check
+        terraform init
+        terraform validate
+        terraform apply -auto-approve
