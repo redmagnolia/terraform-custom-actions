@@ -11,6 +11,7 @@ This action combines and runs the following Terraform commands on a configuratio
 
 Checks whether the configuration has been formatted correctly. A comment is posted in case the configuration is not formatted properly.
 
+
 ## Terraform Apply Action
 
 
