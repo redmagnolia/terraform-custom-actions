@@ -64,7 +64,7 @@ ${formatOutput}
 function initComment() {
     const initOutcome = core.getInput('init-outcome');
 
-    if (initOutcome == null || initOutcome == 'success' || formatOutcome == 'skipped') {
+    if (initOutcome == null || initOutcome == 'success' || initOutcome == 'skipped') {
         return null;
     }
 
@@ -78,7 +78,7 @@ ${initError}
 function validateComment() {
     const validateOutcome = core.getInput('validate-outcome');
 
-    if (validateOutcome == null || validateOutcome == 'success' || formatOutcome == 'skipped') {
+    if (validateOutcome == null || validateOutcome == 'success' || validateOutcome == 'skipped') {
         return null;
     }
 
