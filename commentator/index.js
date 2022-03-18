@@ -9,22 +9,22 @@ const github = require('@actions/github');
 
         const terraformStep = core.getInput("terraform-step");
         const comment = terraformStepComment(terraformStep);
-        
-        await octokit.rest.issues.listComments({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.issue.number,
-        })
-        .then(result => result.data)
-        .then(data => data.filter(data => data.user.login == 'github-actions[bot]' && includesCommentTypes(data.body)))
-        .then(filteredData => filteredData.map(data => data.id))
-        .then(ids => ids.forEach(id => octokit.rest.issues.deleteComment({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            comment_id: id,
-        })));
 
         if (comment) {
+            await octokit.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+            })
+            .then(result => result.data)
+            .then(data => data.filter(data => data.user.login == 'github-actions[bot]' && includesCommentTypes(data.body)))
+            .then(filteredData => filteredData.map(data => data.id))
+            .then(ids => ids.forEach(id => octokit.rest.issues.deleteComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: id,
+            })));
+            
             await octokit.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
