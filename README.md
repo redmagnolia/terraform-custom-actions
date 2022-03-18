@@ -9,8 +9,15 @@ This action combines and runs the following Terraform commands on a configuratio
 
 ### Format
 
-Checks whether the configuration has been formatted correctly. A comment is posted in case the configuration is not formatted properly.
+Checks whether the configuration has been formatted correctly.
 
+```
+terraform fmt -check
+```
+
+A comment is posted in case the configuration is not formatted properly.
+
+![This is an image](./comments/format-error.png)
 
 ## Terraform Apply Action
 
