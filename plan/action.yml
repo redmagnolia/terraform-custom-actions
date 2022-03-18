@@ -17,21 +17,45 @@ runs:
     
     - name: Terraform Format
       id: fmt
-      uses: redmagnolia/terraform-custom-actions/format@v1
+      run: terraform fmt -check
+      shell: bash
+
+    - name: Post Terraform Format
+      if: always()
+      uses: redmagnolia/terraform-custom-actions/commentator@v1
       with:
         github-token: ${{ inputs.github-token }}
+        format-outcome: ${{ steps.fmt.outcome }}
+        format-output: ${{ steps.fmt.outputs.stdout }}
+        terraform-step: 'format'
 
     - name: Terraform Init
       id: init
-      uses: redmagnolia/terraform-custom-actions/init@v1
+      run: terraform init -no-color
+      shell: bash
+
+    - name: Post Terraform Init
+      if: always()
+      uses: redmagnolia/terraform-custom-actions/commentator@v1
       with:
         github-token: ${{ inputs.github-token }}
+        init-outcome: ${{ steps.init.outcome }}
+        init-error: ${{ steps.init.outputs.stderr }}
+        terraform-step: 'init'
 
     - name: Terraform Validate
       id: validate
-      uses: redmagnolia/terraform-custom-actions/validate@v1
+      run: terraform validate -no-color
+      shell: bash
+
+    - name: Post Terraform Validate
+      if: always()
+      uses: redmagnolia/terraform-custom-actions/commentator@v1
       with:
         github-token: ${{ inputs.github-token }}
+        validate-outcome: ${{ steps.validate.outcome }}
+        validate-error: ${{ steps.validate.outputs.stderr }}
+        terraform-step: 'validate'
 
     - name: Terraform Plan
       id: plan
