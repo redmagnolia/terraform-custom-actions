@@ -21,6 +21,7 @@ runs:
       shell: bash
 
     - name: Post Terraform Format
+      if: always()
       uses: redmagnolia/terraform-custom-actions/commentator@v1
       with:
         github-token: ${{ inputs.github-token }}
@@ -34,6 +35,7 @@ runs:
       shell: bash
 
     - name: Post Terraform Init
+      if: always()
       uses: redmagnolia/terraform-custom-actions/commentator@v1
       with:
         github-token: ${{ inputs.github-token }}
@@ -47,6 +49,7 @@ runs:
       shell: bash
 
     - name: Post Terraform Validate
+      if: always()
       uses: redmagnolia/terraform-custom-actions/commentator@v1
       with:
         github-token: ${{ inputs.github-token }}
