@@ -50,7 +50,7 @@ function terraformStepComment(terraformStep) {
 function formatComment() {
     const formatOutcome = core.getInput('format-outcome');
     
-    if (formatOutcome == null || formatOutcome == 'success') {
+    if (formatOutcome == null || formatOutcome == 'success' || formatOutcome == 'skipped') {
         return null;
     }
 
@@ -64,7 +64,7 @@ ${formatOutput}
 function initComment() {
     const initOutcome = core.getInput('init-outcome');
 
-    if (initOutcome == null || initOutcome == 'success') {
+    if (initOutcome == null || initOutcome == 'success' || formatOutcome == 'skipped') {
         return null;
     }
 
@@ -78,7 +78,7 @@ ${initError}
 function validateComment() {
     const validateOutcome = core.getInput('validate-outcome');
 
-    if (validateOutcome == null || validateOutcome == 'success') {
+    if (validateOutcome == null || validateOutcome == 'success' || formatOutcome == 'skipped') {
         return null;
     }
 
