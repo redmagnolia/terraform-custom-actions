@@ -22,7 +22,7 @@ runs:
 
     - name: Post Terraform Format
       if: always()
-      uses: redmagnolia/terraform-custom-actions/commentator@v1
+      uses: redmagnolia/terraform-custom-actions/commentator@v1-alpha
       with:
         github-token: ${{ inputs.github-token }}
         format-outcome: ${{ steps.fmt.outcome }}
@@ -36,7 +36,7 @@ runs:
 
     - name: Post Terraform Init
       if: always()
-      uses: redmagnolia/terraform-custom-actions/commentator@v1
+      uses: redmagnolia/terraform-custom-actions/commentator@v1-alpha
       with:
         github-token: ${{ inputs.github-token }}
         init-outcome: ${{ steps.init.outcome }}
@@ -50,7 +50,7 @@ runs:
 
     - name: Post Terraform Validate
       if: always()
-      uses: redmagnolia/terraform-custom-actions/commentator@v1
+      uses: redmagnolia/terraform-custom-actions/commentator@v1-alpha
       with:
         github-token: ${{ inputs.github-token }}
         validate-outcome: ${{ steps.validate.outcome }}
@@ -63,7 +63,7 @@ runs:
       shell: bash
 
     - name: Post Terraform Plan
-      uses: redmagnolia/terraform-custom-actions/commentator@v1
+      uses: redmagnolia/terraform-custom-actions/commentator@v1-alpha
       with:
         github-token: ${{ inputs.github-token }}
         valid-plan: ${{ steps.fmt.outcome == 'success' && steps.init.outcome == 'success' && steps.validate.outcome == 'success' && steps.plan.outcome == 'success' }}
