@@ -13,7 +13,7 @@ As a step of a job in a GitHub workflow:
 
 ```yaml
 - name: Terraform Plan
-  uses: redmagnolia/terraform-custom-actions/plan@v1
+  uses: redmagnolia/terraform-custom-actions/plan@<version>
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -31,7 +31,6 @@ Checks whether the Terraform configuration has been formatted correctly.
 
 A comment is posted in case the configuration is not formatted properly.
 
-![This is an image](./comments/format-error.png)
 
 #### Initialisation
 
@@ -46,7 +45,6 @@ The Terraform configuration is initialised.
 
 A comment is posted in case there is an error during initialisation.
 
-![This is an image](./comments/init-error.png)
 
 #### Validation
 
@@ -61,7 +59,6 @@ The Terraform configuration is validated.
 
 A comment is posted in case the configuration is not valid.
 
-![This is an image](./comments/validation-error.png)
 
 #### Plan
 
@@ -76,8 +73,6 @@ A Terraform plan is generated based on the configuration.
 
 A comment is posted as a summary for all the steps executed - `fmt | init | validate | plan`. The plan can be expanded by clicking on _*Show Plan*_.
 
-![This is an image](./comments/plan.png)
-
 
 ## Terraform Apply Action
 
@@ -89,7 +84,7 @@ As a step of a job in a GitHub workflow:
 
 ```yaml
 - name: Terraform Apply
-  uses: redmagnolia/terraform-custom-actions/apply@v1
+  uses: redmagnolia/terraform-custom-actions/apply@<version>
 ```
 
 #### Apply
