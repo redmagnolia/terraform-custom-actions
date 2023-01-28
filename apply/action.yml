@@ -1,6 +1,12 @@
 name: 'Terraform Apply'
 description: 'Runs terraform apply for a configuration'
 
+inputs:
+  working-directory:
+    description: 'The path to run the composite steps'
+    required: false
+    default: "./"
+
 runs:
   using: 'composite'
 
@@ -9,6 +15,7 @@ runs:
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.x.x
+      working-directory: ${{ inputs.working-directory }}
 
     - name: Terraform Apply
       if: ${{ github.ref == 'refs/heads/main' }}
@@ -18,3 +25,4 @@ runs:
         terraform validate
         terraform apply -auto-approve
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
