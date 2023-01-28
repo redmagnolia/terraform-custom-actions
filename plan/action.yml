@@ -33,7 +33,6 @@ runs:
         format-outcome: ${{ steps.fmt.outcome }}
         format-output: ${{ steps.fmt.outputs.stdout }}
         terraform-step: 'format'
-      working-directory: ${{ inputs.working-directory }}
 
     - name: Terraform Init
       id: init
@@ -49,7 +48,6 @@ runs:
         init-outcome: ${{ steps.init.outcome }}
         init-error: ${{ steps.init.outputs.stderr }}
         terraform-step: 'init'
-      working-directory: ${{ inputs.working-directory }}
 
     - name: Terraform Validate
       id: validate
@@ -65,7 +63,6 @@ runs:
         validate-outcome: ${{ steps.validate.outcome }}
         validate-error: ${{ steps.validate.outputs.stderr }}
         terraform-step: 'validate'
-      working-directory: ${{ inputs.working-directory }}
 
     - name: Terraform Plan
       id: plan
@@ -81,10 +78,8 @@ runs:
         plan-output: ${{ steps.plan.outputs.stdout }}
         plan-error: ${{ steps.plan.outputs.stderr }}
         terraform-step: 'plan'
-      working-directory: ${{ inputs.working-directory }}
 
     - name: Terraform Plan Error
       if: ${{ steps.plan.outputs.exitcode == '1' }}
       run: exit 1
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
