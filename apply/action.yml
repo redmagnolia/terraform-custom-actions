@@ -15,7 +15,6 @@ runs:
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.x.x
-      working-directory: ${{ inputs.working-directory }}
 
     - name: Terraform Apply
       if: ${{ github.ref == 'refs/heads/main' }}
